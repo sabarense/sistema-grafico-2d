@@ -286,7 +286,8 @@ class UIManager {
     _handleDrawPoint(world) {
         if (this._onSaveState) this._onSaveState();
         const { Point } = window.CG_Primitives;
-        const point = new Point(Math.round(world.x), Math.round(world.y), this._getColor());
+        // Desenhos usam a Cor Secundária (Contorno) por padrão
+        const point = new Point(Math.round(world.x), Math.round(world.y), this._getSecondaryColor());
         this.scene.add(point);
         this.onSceneChange();
     }
@@ -307,7 +308,7 @@ class UIManager {
         const line = new Line(
             this.tempStartWorld.x, this.tempStartWorld.y,
             end.x, end.y,
-            algorithm, this._getColor()
+            algorithm, this._getSecondaryColor()
         );
         this.scene.add(line);
 
@@ -334,7 +335,7 @@ class UIManager {
         if (radius > 0) {
             if (this._onSaveState) this._onSaveState();
             const circle = new Circle(
-                this.tempStartWorld.x, this.tempStartWorld.y, radius, this._getColor()
+                this.tempStartWorld.x, this.tempStartWorld.y, radius, this._getSecondaryColor()
             );
             this.scene.add(circle);
         }
@@ -397,7 +398,7 @@ class UIManager {
         if (this.polygonVertices.length >= 3) {
             if (this._onSaveState) this._onSaveState();
             const { Polygon } = window.CG_Primitives;
-            const polygon = new Polygon(this.polygonVertices, this._getColor());
+            const polygon = new Polygon(this.polygonVertices, this._getSecondaryColor());
             this.scene.add(polygon);
         }
         this.polygonVertices = [];

@@ -332,11 +332,7 @@ function renderScene() {
     // 1. Limpa o buffer
     renderer.clearBuffer();
 
-    // 2. Desenha grid e eixos
-    renderer.drawGrid();
-    renderer.drawAxes();
-
-    // 3. Rasteriza todas as primitivas da cena
+    // 2. Rasteriza todas as primitivas da cena
     const primitives = scene.getAll();
     const hoveredId = ui.getHoveredPrimitiveId();
 
@@ -374,7 +370,7 @@ function renderScene() {
         }
     });
 
-    // 4. Executa os algoritmos de preenchimento
+    // 3. Executa os algoritmos de preenchimento
     fills.forEach(fill => {
         if (fill.fillType === 'boundary') {
             boundaryFill(fill.x, fill.y, fill.color, fill.targetColor, renderer);
@@ -382,6 +378,10 @@ function renderScene() {
             floodFill(fill.x, fill.y, fill.color, fill.targetColor, renderer);
         }
     });
+
+    // 4. Desenha grid e eixos por cima do preenchimento para não interferir com o Flood Fill
+    renderer.drawGrid();
+    renderer.drawAxes();
 
     // 5. Desenha polígono em construção (preview)
     const polyInProgress = ui.getPolygonInProgress();
